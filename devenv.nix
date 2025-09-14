@@ -5,7 +5,7 @@
   # env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [ bun ];
+  packages = with pkgs; [ bun librewolf ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
