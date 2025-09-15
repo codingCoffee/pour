@@ -7,7 +7,7 @@ import './App.css';
 function App() {
   const [mappings, setMappings] = useState<ContainerMapping>({});
   const [containers, setContainers] = useState<ContainerInfo[]>([]);
-  const [newTld, setNewTld] = useState('');
+  const [newDomain, setNewDomain] = useState('');
   const [selectedContainer, setSelectedContainer] = useState('');
   const [exportData, setExportData] = useState('');
   const [importData, setImportData] = useState('');
@@ -27,9 +27,9 @@ function App() {
   };
 
   const addMapping = async () => {
-    if (newTld && selectedContainer) {
-      await StorageService.addMapping(newTld, selectedContainer);
-      setNewTld('');
+    if (newDomain && selectedContainer) {
+      await StorageService.addMapping(newDomain, selectedContainer);
+      setNewDomain('');
       setSelectedContainer('');
       await loadData();
     }
@@ -65,16 +65,16 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Container Manager</h1>
+      <h1>Pour</h1>
       
       <div className="section">
         <h2>Add New Mapping</h2>
         <div className="form-group">
           <input
             type="text"
-            placeholder="TLD (e.g., google.com)"
-            value={newTld}
-            onChange={(e) => setNewTld(e.target.value)}
+            placeholder="Domain (e.g., google.com)"
+            value={newDomain}
+            onChange={(e) => setNewDomain(e.target.value)}
           />
           <select
             value={selectedContainer}
@@ -87,7 +87,7 @@ function App() {
               </option>
             ))}
           </select>
-          <button onClick={addMapping} disabled={!newTld || !selectedContainer}>
+          <button onClick={addMapping} disabled={!newDomain || !selectedContainer}>
             Add
           </button>
         </div>
@@ -96,14 +96,14 @@ function App() {
       <div className="section">
         <h2>Current Mappings</h2>
         <div className="mappings-list">
-          {Object.entries(mappings).map(([tld, containerName]) => (
-            <div key={tld} className="mapping-item">
-              <span className="tld">{tld}</span>
+          {Object.entries(mappings).map(([domain, containerName]) => (
+            <div key={domain} className="mapping-item">
+              <span className="tld">{domain}</span>
               <span className="arrow">→</span>
               <span className="container">{containerName}</span>
               <button
                 className="remove-btn"
-                onClick={() => removeMapping(tld)}
+                onClick={() => removeMapping(domain)}
               >
                 ×
               </button>

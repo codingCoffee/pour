@@ -29,17 +29,17 @@ export default defineBackground(() => {
     if (!tab.url || !tab.id) return;
 
     try {
-      const tld = ContainerService.extractTLD(tab.url);
-      if (!tld) return;
+      const domain = ContainerService.extractDomain(tab.url);
+      if (!domain) return;
 
       const mappings = await StorageService.getContainerMappings();
-      const containerName = mappings[tld];
+      const containerName = mappings[domain];
       
       if (!containerName) return;
 
       const container = await ContainerService.getContainerByName(containerName);
       if (!container) {
-        console.warn(`Container "${containerName}" not found for TLD "${tld}"`);
+        console.warn(`Container "${containerName}" not found for domain "${domain}"`);
         return;
       }
 
@@ -47,7 +47,7 @@ export default defineBackground(() => {
       await browser.tabs.remove(tab.id);
       await ContainerService.createTab(tab.url, container.cookieStoreId);
       
-      console.log(`Redirected ${tld} to container: ${containerName}`);
+      console.log(`Redirected ${domain} to container: ${containerName}`);
     } catch (error) {
       console.error('Error redirecting tab to container:', error);
     }

@@ -12,15 +12,15 @@ export class StorageService {
     await browser.storage.local.set({ [STORAGE_KEY]: mappings });
   }
 
-  static async addMapping(tld: string, containerName: string): Promise<void> {
+  static async addMapping(domain: string, containerName: string): Promise<void> {
     const mappings = await this.getContainerMappings();
-    mappings[tld] = containerName;
+    mappings[domain] = containerName;
     await this.setContainerMappings(mappings);
   }
 
-  static async removeMapping(tld: string): Promise<void> {
+  static async removeMapping(domain: string): Promise<void> {
     const mappings = await this.getContainerMappings();
-    delete mappings[tld];
+    delete mappings[domain];
     await this.setContainerMappings(mappings);
   }
 
@@ -31,8 +31,10 @@ export class StorageService {
 
   static async importMappings(jsonData: string): Promise<void> {
     try {
-      const mappings = JSON.parse(jsonData) as ContainerMapping;
-      await this.setContainerMappings(mappings);
+      const newMappings = JSON.parse(jsonData) as ContainerMapping;
+      const existingMappings = await this.getContainerMappings();
+      const mergedMappings = { ...existingMappings, ...newMappings };
+      await this.setContainerMappings(mergedMappings);
     } catch (error) {
       throw new Error('Invalid JSON format');
     }

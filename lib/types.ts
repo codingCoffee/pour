@@ -1,6 +1,6 @@
 // Types for container management
 export interface ContainerMapping {
-  [tld: string]: string; // TLD -> container name
+  [domain: string]: string; // Domain -> container name
 }
 
 export interface ContainerInfo {

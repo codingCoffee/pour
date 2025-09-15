@@ -28,20 +28,12 @@ export class ContainerService {
     } as any);
   }
 
-  static extractTLD(url: string): string {
+  static extractDomain(url: string): string {
     try {
       const urlObj = new URL(url);
-      const hostname = urlObj.hostname;
-      const parts = hostname.split('.');
-      
-      // Handle special cases like .co.uk, .com.au, etc.
-      if (parts.length >= 2) {
-        return parts.slice(-2).join('.');
-      }
-      
-      return hostname;
+      return urlObj.hostname;
     } catch (error) {
-      console.error('Error extracting TLD from URL:', url, error);
+      console.error('Error extracting domain from URL:', url, error);
       return '';
     }
   }

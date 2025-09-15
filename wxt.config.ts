@@ -4,7 +4,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   modules: ['@wxt-dev/module-react'],
   manifest: {
-    name: 'Container Manager',
+    name: 'Pour',
     description: 'Automatically open websites in specified Firefox containers based on domain',
     permissions: [
       'storage',
