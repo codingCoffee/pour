@@ -9,7 +9,7 @@ export default defineBackground(() => {
   browser.tabs.onUpdated.addListener(handleTabUpdated);
 
   async function handleTabCreated(tab: any) {
-    if (tab.url && !tab.cookieStoreId) {
+    if (tab.url && !isContainerTab(tab)) {
       await redirectToContainer(tab);
     }
   }
