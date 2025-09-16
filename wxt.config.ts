@@ -14,8 +14,11 @@ export default defineConfig({
     ],
     browser_specific_settings: {
       gecko: {
-        id: 'container-manager@example.com',
-        strict_min_version: '57.0'
+        id: 'pour@codingcoffee.me',
+        strict_min_version: '58.0',
+        data_collection_permissions: {
+          required: ["none"],
+        }
       }
     }
   }

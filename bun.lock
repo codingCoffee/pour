@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "wxt-react-starter",
+      "name": "pour",
       "dependencies": {
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
