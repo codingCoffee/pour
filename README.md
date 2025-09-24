@@ -2,7 +2,7 @@
 
 > Automatically pour websites into Firefox containers based on domain
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL 3.0](https://img.shields.io/badge/License-GPL%203.0-yellow.svg)](https://opensource.org/license/gpl-3-0)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Firefox](https://img.shields.io/badge/Firefox-FF7139?logo=firefox&logoColor=white)](https://www.mozilla.org/firefox/)
@@ -30,14 +30,12 @@ Pour is a Firefox extension that automatically opens websites in specified Firef
 
 2. **Install dependencies**
    ```bash
-   npm install
-   # or
    bun install
    ```
 
 3. **Build for Firefox**
    ```bash
-   npm run build:firefox
+   bun build:firefox
    ```
 
 4. **Load in Firefox**
@@ -45,9 +43,9 @@ Pour is a Firefox extension that automatically opens websites in specified Firef
    - Click "This Firefox" → "Load Temporary Add-on"
    - Select the `dist-firefox/manifest.json` file
 
-### From Firefox Add-ons (Coming Soon)
+### From Firefox Add-ons
 
-*Package will be available on Firefox Add-ons once published*
+You can download the extension from Firefox Addons here - [Pour](https://addons.mozilla.org/en-US/firefox/addon/pour)
 
 ## 🎯 Usage
 
@@ -86,9 +84,6 @@ Pour is a Firefox extension that automatically opens websites in specified Firef
 ### Development Commands
 
 ```bash
-# Start development server (Chrome)
-npm run dev
-
 # Start development server (Firefox)
 npm run dev:firefox
 
@@ -145,7 +140,7 @@ pour/
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPV-3.0 License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Motivation
 
