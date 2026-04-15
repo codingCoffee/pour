@@ -63,95 +63,114 @@ function App() {
     }
   };
 
+  const count = Object.keys(mappings).length;
+
   return (
-    <div className="container">
-      <h1>Pour</h1>
-      
-      <div className="section">
-        <h2>Add New Mapping</h2>
-        <div className="form-group">
+    <div className="app">
+      <header className="header">
+        <h1 className="brand">Pour<span className="dot">.</span></h1>
+        <p className="tagline">container · router</p>
+      </header>
+
+      <section className="section">
+        <h2 className="section-label">New Mapping</h2>
+        <div className="form">
           <input
+            className="input"
             type="text"
-            placeholder="Domain (e.g., google.com)"
+            placeholder="domain.com"
             value={newDomain}
             onChange={(e) => setNewDomain(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && addMapping()}
           />
           <select
+            className="select"
             value={selectedContainer}
             onChange={(e) => setSelectedContainer(e.target.value)}
           >
-            <option value="">Select Container</option>
+            <option value="">Select container</option>
             {containers.map((container) => (
               <option key={container.cookieStoreId} value={container.name}>
                 {container.name}
               </option>
             ))}
           </select>
-          <button onClick={addMapping} disabled={!newDomain || !selectedContainer}>
-            Add
+          <button
+            className="btn-add"
+            onClick={addMapping}
+            disabled={!newDomain || !selectedContainer}
+          >
+            Pour into container
           </button>
         </div>
-      </div>
+      </section>
 
-      <div className="section">
-        <h2>Current Mappings</h2>
-        <div className="mappings-list">
-          {Object.entries(mappings).map(([domain, containerName]) => (
-            <div key={domain} className="mapping-item">
-              <span className="tld">{domain}</span>
-              <span className="arrow">→</span>
-              <span className="container">{containerName}</span>
-              <button
-                className="remove-btn"
-                onClick={() => removeMapping(domain)}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-          {Object.keys(mappings).length === 0 && (
-            <p className="empty">No mappings configured</p>
-          )}
-        </div>
-      </div>
+      <section className="section">
+        <h2 className="section-label">
+          Mappings
+          <span className="count">{String(count).padStart(2, '0')}</span>
+        </h2>
+        {count === 0 ? (
+          <div className="empty">nothing poured yet</div>
+        ) : (
+          <div className="mappings">
+            {Object.entries(mappings).map(([domain, containerName]) => (
+              <div key={domain} className="row">
+                <span className="domain" title={domain}>{domain}</span>
+                <span className="arrow">↝</span>
+                <span className="container-name" title={containerName}>{containerName}</span>
+                <button
+                  className="remove"
+                  onClick={() => removeMapping(domain)}
+                  aria-label={`Remove ${domain}`}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
-      <div className="section">
-        <h2>Export/Import</h2>
-        <div className="buttons-row">
-          <button onClick={exportMappings}>Export</button>
-          <button onClick={() => setShowImport(!showImport)}>
-            {showImport ? 'Cancel Import' : 'Import'}
+      <section className="section">
+        <h2 className="section-label">Tools</h2>
+        <div className="tools">
+          <button className="btn-ghost" onClick={exportMappings}>Export</button>
+          <button className="btn-ghost" onClick={() => setShowImport(!showImport)}>
+            {showImport ? 'Cancel' : 'Import'}
           </button>
-          <button onClick={clearAll} className="danger">Clear All</button>
+          <button className="btn-ghost danger" onClick={clearAll}>Clear</button>
         </div>
 
         {exportData && (
-          <div className="export-data">
-            <h3>Export Data:</h3>
+          <div className="io-panel">
             <textarea
               value={exportData}
               readOnly
-              rows={6}
+              rows={5}
               onClick={(e) => e.currentTarget.select()}
             />
           </div>
         )}
 
         {showImport && (
-          <div className="import-data">
-            <h3>Import Data:</h3>
+          <div className="io-panel">
             <textarea
               value={importData}
               onChange={(e) => setImportData(e.target.value)}
-              placeholder="Paste JSON data here..."
-              rows={6}
+              placeholder="Paste JSON…"
+              rows={5}
             />
-            <button onClick={importMappings} disabled={!importData}>
+            <button
+              className="btn-add"
+              onClick={importMappings}
+              disabled={!importData}
+            >
               Import
             </button>
           </div>
         )}
-      </div>
+      </section>
     </div>
   );
 }
