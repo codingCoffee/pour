@@ -9,18 +9,17 @@ export default defineBackground(() => {
   browser.tabs.onUpdated.addListener(handleTabUpdated);
 
   async function handleTabCreated(tab: any) {
-    if (tab.url && !isContainerTab(tab)) {
+    if (tab.url) {
       await redirectToContainer(tab);
     }
   }
 
   async function handleTabUpdated(
-    tabId: number, 
-    changeInfo: any, 
+    _tabId: number,
+    changeInfo: any,
     tab: any
   ) {
-    // Only handle navigation changes with new URLs
-    if (changeInfo.url && tab.url && !isContainerTab(tab)) {
+    if (changeInfo.url && tab.url) {
       await redirectToContainer(tab);
     }
   }
@@ -34,7 +33,7 @@ export default defineBackground(() => {
 
       const mappings = await StorageService.getContainerMappings();
       const containerName = mappings[domain];
-      
+
       if (!containerName) return;
 
       const container = await ContainerService.getContainerByName(containerName);
@@ -43,18 +42,14 @@ export default defineBackground(() => {
         return;
       }
 
-      // Close the original tab and open in container
+      if (tab.cookieStoreId === container.cookieStoreId) return;
+
       await browser.tabs.remove(tab.id);
       await ContainerService.createTab(tab.url, container.cookieStoreId);
-      
+
       console.log(`Redirected ${domain} to container: ${containerName}`);
     } catch (error) {
       console.error('Error redirecting tab to container:', error);
     }
-  }
-
-  function isContainerTab(tab: any): boolean {
-    return tab.cookieStoreId !== undefined && 
-           tab.cookieStoreId !== 'firefox-default';
   }
 });
